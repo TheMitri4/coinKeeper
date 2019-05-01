@@ -41,6 +41,12 @@ function SideNavigation(el) {
     sidenav.addEventListener('pointercancel', onPointerUp);
     sidenav.addEventListener('pointerleave', onPointerUp);
 
+    container.addEventListener('pointerdown', onPointerDown);
+    container.addEventListener('pointermove', onPointerMove);
+    container.addEventListener('pointerup', onPointerUp);
+    container.addEventListener('pointercancel', onPointerUp);
+    container.addEventListener('pointerleave', onPointerUp);
+
     sideNavShowBtn.addEventListener('click', function(event){
         sidenav.classList.toggle('side-nav__content--hidden');
         // sideNavShowBtn.classList.toggle('side-nav__show-button--left');
