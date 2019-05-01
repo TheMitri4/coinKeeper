@@ -1,4 +1,5 @@
 let sideNav = document.querySelector('.side-nav');
+// let sideNavShowBtn = document.querySelector('.side-nav__show-button')
 
 // sideNavShowBtn.addEventListener('click', (event) => {
 //     event.preventDefault();
@@ -21,7 +22,7 @@ let swipeSideNav = new SideNavigation(sideNav);
 
 function SideNavigation(el) {
     var container = el,
-        sidenav = el.querySelector('.side-nav__list'),
+        sidenav = el.querySelector('.side-nav__content'),
         // close = el.querySelector('.side-nav__close'),
         startPosition = 0,
         currentPosition = 0,
@@ -40,19 +41,19 @@ function SideNavigation(el) {
     sidenav.addEventListener('pointercancel', onPointerUp);
     sidenav.addEventListener('pointerleave', onPointerUp);
 
-    sideNavShowBtn.addEventListener('click', function(){
-        container.classList.toggle('side-nav--hidden');
-        sideNavShowBtn.classList.toggle('side-nav__show-button--left');
+    sideNavShowBtn.addEventListener('click', function(event){
+        sidenav.classList.toggle('side-nav__content--hidden');
+        // sideNavShowBtn.classList.toggle('side-nav__show-button--left');
     });
 
     function show() {
-        container.classList.remove('side-nav--hidden');
-        sideNavShowBtn.classList.add('side-nav__show-button--left');
+        sidenav.classList.remove('side-nav__content--hidden');
+        // sideNavShowBtn.classList.add('side-nav__show-button--left');
     }
 
     function hide() {
-        container.classList.add('side-nav--hidden');
-        sideNavShowBtn.classList.remove('side-nav__show-button--left');
+        sidenav.classList.add('side-nav__content--hidden');
+        // sideNavShowBtn.classList.remove('side-nav__show-button--left');
     }
 
     function onContainerClick(e) {
