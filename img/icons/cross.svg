@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<line transform="translate(0 12)" x2="24" fill="none" stroke="#ff6363" stroke-width="4" data-name="Line 1"/>
+<path transform="translate(12) rotate(90)" d="m0 0h24" fill="none" stroke="#ff6363" stroke-width="4" data-name="Path 7"/>
+</svg>
