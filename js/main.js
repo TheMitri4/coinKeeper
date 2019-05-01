@@ -186,3 +186,81 @@ function SideNavigation(el) {
 		sidenav.style.transition = '';
 	}
 }
+
+function Cost(title , categories	, price, date){
+	this.title = title,
+	this.price = price,
+	this.date = date,
+	this.categories = categories
+}
+
+function costCardTemplate(obj) {
+	return {
+		tag: 'li',
+		cls: ['costs__item', 'cost-card'],
+		content: [
+			{
+				tag: 'div',
+				cls: 'cost-card__text-block',
+				content: [
+					{
+						tag: 'p',
+						cls: 'cost-card__text',
+						content: obj.title
+					},
+					{
+						tag: 'p',
+						cls: 'cost-card__category-icon',
+						content: obj.categories
+					}
+				]
+			},
+			{
+				tag: 'p',
+				cls: 'cost-card__price',
+				content: obj.price
+			},
+			{
+				tag: 'p',
+				cls: 'cost-card__date',
+				content: obj.date
+			}
+		]	
+	}
+}
+
+function browserJSEngine(block) {
+	if ((block === undefined) || (block === null) || (block === false)) {
+		return document.createTextNode('');
+	}
+	if ((typeof block === 'string') || (typeof block === 'number') || (block === true)) {
+		return document.createTextNode(block.toString());
+	}
+	if (Array.isArray(block)) {
+		return block.reduce(function(f, elem) {
+			f.appendChild(browserJSEngine(elem));
+
+			return f;
+		}, document.createDocumentFragment());
+	}
+	var element = document.createElement(block.tag || 'div');
+
+	element.classList.add(
+		...[].concat(block.cls).filter(Boolean)
+	);
+
+	if (block.attrs) {
+		Object.keys(block.attrs).forEach(function(key) {
+			if(block.attrs[key] === ''){
+				element.setAttribute(key, true);
+			}
+			element.setAttribute(key, block.attrs[key]);
+		});
+	}
+
+	if (block.content) {
+		element.appendChild(browserJSEngine(block.content));
+	}
+
+	return element;
+}

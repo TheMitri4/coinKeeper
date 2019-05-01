@@ -219,6 +219,10 @@ body{
 		right: 48px;
 		width: 48px;
 		height: 48px;
+		opacity: 0;
+	}
+	30%{
+		opacity: 1;
 	}
 	100%{
 		width: 100vw;
