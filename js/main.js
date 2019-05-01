@@ -10,134 +10,179 @@ let sideNav = document.querySelector('.side-nav');
 let addButton = document.querySelector('.add-button');
 let addForm = document.querySelector('.add-cost');
 
-addButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    addForm.classList.toggle('hidden');
+addButton.addEventListener('click', function(event){
+	event.preventDefault();
+	if(addForm.classList.contains('hidden')){
+		addForm.classList.remove('hidden');
+		addForm.classList.add('add-cost__appear');
+		this.classList.add('add-button--close');
+		setTimeout(() => {
+			addForm.classList.remove('add-cost__appear');
+		}, 400);
+	}else{
+		addForm.classList.add('add-cost__disappear');
+		this.classList.remove('add-button--close');
+		setTimeout(() => {
+			addForm.classList.add('hidden');
+			addForm.classList.remove('add-cost__disappear');
+		}, 400);
+	}
+	
 });
 
-
+let main = document.querySelector('.main');
 let swipeSideNav = new SideNavigation(sideNav);
-
 //DragSide
 
+
+
 function SideNavigation(el) {
-    var container = el,
-        sidenav = el.querySelector('.side-nav__content'),
-        // close = el.querySelector('.side-nav__close'),
-        startPosition = 0,
-        currentPosition = 0,
-        isGestureStarted = false,
-        sideNavShowBtn = document.querySelector('.side-nav__show-button');
+	var container = el,
+		sidenav = el.querySelector('.side-nav__content'),
+		// close = el.querySelector('.side-nav__close'),
+		startPosition = 0,
+		currentPosition = 0,
+		isGestureStarted = false,
+		sideNavShowBtn = document.querySelector('.side-nav__show-button');
 
-    this.hide = hide;
-    this.show = show;
+	this.hide = hide;
+	this.show = show;
 
-    // close.addEventListener('click', this.hide);
-    container.addEventListener('click', onContainerClick);
+	// let sideSwiping = false;
+	// document.addEventListener('pointerdown', function(e){
+	// 	if(event.pageX < 20){
+	// 		console.log('privet');
+	// 		sideSwiping = true;
+	// 		currentPosition = startPosition = e.pageX;
+	// 		disableTransition();
+	// 	}
+	// });
 
-    sidenav.addEventListener('pointerdown', onPointerDown);
-    sidenav.addEventListener('pointermove', onPointerMove);
-    sidenav.addEventListener('pointerup', onPointerUp);
-    sidenav.addEventListener('pointercancel', onPointerUp);
-    sidenav.addEventListener('pointerleave', onPointerUp);
+	// document.addEventListener('pointermove', function(e){
+	// 	if(!sideSwiping){
+	// 		return;
+	// 	}
+	// 	e.preventDefault();
+	// 	currentPosition = e.pageX;
+	// 	requestAnimationFrame(function() {
+	// 		var diff = Math.min(10, currentPosition - startPosition);
+	// 		console.log(diff);
+	// 		sidenav.style.transform = 'translateX(' + (-sidenav.clientWidth - diff) + 'px)';
+	// 	});
+	// });
 
-    container.addEventListener('pointerdown', onPointerDown);
-    container.addEventListener('pointermove', onPointerMove);
-    container.addEventListener('pointerup', onPointerUp);
-    container.addEventListener('pointercancel', onPointerUp);
-    container.addEventListener('pointerleave', onPointerUp);
+	// close.addEventListener('click', this.hide);
+	container.addEventListener('click', onContainerClick);
 
-    sideNavShowBtn.addEventListener('click', function(event){
-        sidenav.classList.toggle('side-nav__content--hidden');
-        // sideNavShowBtn.classList.toggle('side-nav__show-button--left');
-    });
+	sidenav.addEventListener('pointerdown', onPointerDown);
+	sidenav.addEventListener('pointermove', onPointerMove);
+	sidenav.addEventListener('pointerup', onPointerUp);
+	sidenav.addEventListener('pointercancel', onPointerUp);
+	sidenav.addEventListener('pointerleave', onPointerUp);
 
-    function show() {
-        sidenav.classList.remove('side-nav__content--hidden');
-        // sideNavShowBtn.classList.add('side-nav__show-button--left');
-    }
+	container.addEventListener('pointerdown', onPointerDown);
+	container.addEventListener('pointermove', onPointerMove);
+	container.addEventListener('pointerup', onPointerUp);
+	container.addEventListener('pointercancel', onPointerUp);
+	container.addEventListener('pointerleave', onPointerUp);
 
-    function hide() {
-        sidenav.classList.add('side-nav__content--hidden');
-        // sideNavShowBtn.classList.remove('side-nav__show-button--left');
-    }
+	sideNavShowBtn.addEventListener('click', function(event){
+		if(sidenav.classList.contains('side-nav__content--hidden')){
+			show();
+		}else{
+			hide();
+		}
+		// sideNavShowBtn.classList.toggle('side-nav__show-button--left');
+	});
 
-    function onContainerClick(e) {
-        // Close only on non content click
-        if (e.target === container) {
-            hide();
-        }
-    }
+	function show() {
+		sidenav.classList.remove('side-nav__content--hidden');
+		container.classList.remove('side-nav--hidden');
+		// sideNavShowBtn.classList.add('side-nav__show-button--left');
+	}
 
-    /**
-     * Start drag
-     * @param {PointerEvent} e
-     */
-    function onPointerDown(e) {
-        currentPosition = startPosition = e.pageX;
-        isGestureStarted = true;
+	function hide() {
+		sidenav.classList.add('side-nav__content--hidden');
+		// sideNavShowBtn.classList.remove('side-nav__show-button--left');
+		container.classList.add('side-nav--hidden');
+	}
 
-        // Необязательно https://w3c.github.io/pointerevents/#h-implicit-pointer-capture
-        sidenav.setPointerCapture(e.pointerId);
+	function onContainerClick(e) {
+		// Close only on non content click
+		if (e.target === container) {
+			hide();
+		}
+	}
 
-        disableTransition();
-    }
+	/**
+	 * Start drag
+	 * @param {PointerEvent} e
+	 */
+	function onPointerDown(e) {
+		currentPosition = startPosition = e.pageX;
+		isGestureStarted = true;
 
-    /**
-     * Move draggable element
-     * @param {PointerEvent} e
-     */
-    function onPointerMove(e) {
-        if (!isGestureStarted) {
-            return;
-        }
+		// Необязательно https://w3c.github.io/pointerevents/#h-implicit-pointer-capture
+		sidenav.setPointerCapture(e.pointerId);
 
-        currentPosition = e.pageX;
+		disableTransition();
+	}
+
+	/**
+	 * Move draggable element
+	 * @param {PointerEvent} e
+	 */
+	function onPointerMove(e) {
+		if (!isGestureStarted) {
+			return;
+		}
+
+		currentPosition = e.pageX;
 		console.log(currentPosition);
-        updatePosition();
-    }
+		updatePosition();
+	}
 
-    /**
-     * Stop drag
-     * @param {PointerEvent} e
-     */
-    function onPointerUp(e) {
-        currentPosition = e.pageX;
-        isGestureStarted = false;
+	/**
+	 * Stop drag
+	 * @param {PointerEvent} e
+	 */
+	function onPointerUp(e) {
+		currentPosition = e.pageX;
+		isGestureStarted = false;
 
-        sidenav.releasePointerCapture(e.pointerId);
+		sidenav.releasePointerCapture(e.pointerId);
 
-        enableTransition();
-        resetPosition();
+		enableTransition();
+		resetPosition();
 
-        if (currentPosition - startPosition < -50) {
-            hide();
-        } else {
-            show();
-        }
-    }
+		if (currentPosition - startPosition < -50) {
+			hide();
+		} else {
+			show();
+		}
+	}
 
-    /**
-     * Update sidenav translateX value
-     */
-    function updatePosition() {
-        requestAnimationFrame(function() {
-            var diff = Math.min(10, currentPosition - startPosition);
-            sidenav.style.transform = 'translateX(' + diff + 'px)';
-        });
-    }
+	/**
+	 * Update sidenav translateX value
+	 */
+	function updatePosition() {
+		requestAnimationFrame(function() {
+			var diff = Math.min(10, currentPosition - startPosition);
+			sidenav.style.transform = 'translateX(' + diff + 'px)';
+		});
+	}
 
-    function resetPosition() {
-        requestAnimationFrame(function() {
-            sidenav.style.transform = '';
-        });
-    }
+	function resetPosition() {
+		requestAnimationFrame(function() {
+			sidenav.style.transform = '';
+		});
+	}
 
-    function disableTransition() {
-        sidenav.style.transition = 'none';
-    }
+	function disableTransition() {
+		sidenav.style.transition = 'none';
+	}
 
-    function enableTransition() {
-        sidenav.style.transition = '';
-    }
+	function enableTransition() {
+		sidenav.style.transition = '';
+	}
 }
