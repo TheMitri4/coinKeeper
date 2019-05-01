@@ -12,7 +12,7 @@
 			<h2 class="page-header__title">Coin Keeper</h2>
 		</header>
 	</div> -->
-	<nav class="side-nav">
+	<nav class="side-nav side-nav--hidden">
 		<ul class="side-nav__list">
 			<li>
 				<a href="#" class="side-nav__link">Категории</a>
@@ -116,6 +116,16 @@
 	</main>
 	<button class="add-button"></button>
 	<button class="side-nav__show-button"></button>
+	<form action="" class="add-cost hidden">
+		<p class="add-cost__description add-cost__p">Описание:</p>
+		<input type="text" class="add-cost__decription-input">
+		<p class="add-cost__p">Категория:</p>
+		<div class="add-cost__categories"></div>
+		<p class="add-cost__p">Cтоимость:</p>
+		<input type="number" class="add-cost__price" value="600">
+		<p class="add-cost__date">12/05/19</p>
+		<!-- <input type="date" class="add-cost__date" pattern="[0-9]{2}/[0-9]{2}/[0-9]{2}"> -->
+	</form>
 	<script src="js/main.js"></script>
 </body>
 </html>
